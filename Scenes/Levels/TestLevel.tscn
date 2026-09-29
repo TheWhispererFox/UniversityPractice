@@ -1,0 +1,212 @@
+[gd_scene format=3 uid="uid://dwtl0g3ua3k6w"]
+
+[ext_resource type="PackedScene" path="res://Scenes/Player/Drone.tscn" id="1"]
+[ext_resource type="Script" uid="uid://db2mr5du3lb82" path="res://Scripts/Game/GameManager.cs" id="2"]
+
+[sub_resource type="Environment" id="Environment"]
+background_mode = 1
+background_color = Color(0.12, 0.18, 0.26, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.75, 0.85, 1, 1)
+ambient_light_energy = 0.7
+
+[sub_resource type="BoxShape3D" id="GroundShape"]
+size = Vector3(60, 1, 60)
+
+[sub_resource type="StandardMaterial3D" id="Material"]
+albedo_color = Color(0.42, 0.48, 0.55, 1)
+
+[sub_resource type="BoxMesh" id="GroundMesh"]
+material = SubResource("Material")
+size = Vector3(60, 1, 60)
+
+[sub_resource type="BoxShape3D" id="NorthWallShape"]
+size = Vector3(60, 20, 1)
+
+[sub_resource type="BoxMesh" id="NorthWallMesh"]
+material = SubResource("Material")
+size = Vector3(60, 20, 1)
+
+[sub_resource type="BoxShape3D" id="SouthWallShape"]
+size = Vector3(60, 20, 1)
+
+[sub_resource type="BoxMesh" id="SouthWallMesh"]
+material = SubResource("Material")
+size = Vector3(60, 20, 1)
+
+[sub_resource type="BoxShape3D" id="WestWallShape"]
+size = Vector3(1, 20, 60)
+
+[sub_resource type="BoxMesh" id="WestWallMesh"]
+material = SubResource("Material")
+size = Vector3(1, 20, 60)
+
+[sub_resource type="BoxShape3D" id="EastWallShape"]
+size = Vector3(1, 20, 60)
+
+[sub_resource type="BoxMesh" id="EastWallMesh"]
+material = SubResource("Material")
+size = Vector3(1, 20, 60)
+
+[sub_resource type="BoxShape3D" id="CeilingShape"]
+size = Vector3(60, 1, 60)
+
+[sub_resource type="BoxMesh" id="CeilingMesh"]
+material = SubResource("Material")
+size = Vector3(60, 1, 60)
+
+[sub_resource type="BoxShape3D" id="TowerAShape"]
+size = Vector3(4, 8, 4)
+
+[sub_resource type="BoxMesh" id="TowerAMesh"]
+material = SubResource("Material")
+size = Vector3(4, 8, 4)
+
+[sub_resource type="BoxShape3D" id="TowerBShape"]
+size = Vector3(5, 12, 5)
+
+[sub_resource type="BoxMesh" id="TowerBMesh"]
+material = SubResource("Material")
+size = Vector3(5, 12, 5)
+
+[sub_resource type="BoxShape3D" id="LowBlockShape"]
+size = Vector3(4, 3, 3)
+
+[sub_resource type="BoxMesh" id="LowBlockMesh"]
+material = SubResource("Material")
+size = Vector3(4, 3, 3)
+
+[sub_resource type="BoxShape3D" id="TowerCShape"]
+size = Vector3(5, 10, 5)
+
+[sub_resource type="BoxMesh" id="TowerCMesh"]
+material = SubResource("Material")
+size = Vector3(5, 10, 5)
+
+[sub_resource type="BoxShape3D" id="BeamShape"]
+size = Vector3(18, 2, 3)
+
+[sub_resource type="BoxMesh" id="BeamMesh"]
+material = SubResource("Material")
+size = Vector3(18, 2, 3)
+
+[node name="TestLevel" type="Node3D" unique_id=120631634]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=812793338]
+environment = SubResource("Environment")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=415964808]
+transform = Transform3D(0.8660254, 0.40957603, -0.28678823, 0, 0.57357645, 0.81915206, 0.5, -0.7094065, 0.49673176, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Player" parent="." unique_id=1564241743 instance=ExtResource("1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 12)
+
+[node name="GameManager" type="Node" parent="." unique_id=530448611]
+script = ExtResource("2")
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=1536536165]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Collision" type="CollisionShape3D" parent="Ground" unique_id=1191763134]
+shape = SubResource("GroundShape")
+
+[node name="Mesh" type="MeshInstance3D" parent="Ground" unique_id=1274215926]
+mesh = SubResource("GroundMesh")
+
+[node name="NorthWall" type="StaticBody3D" parent="." unique_id=1686287868]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, -30)
+
+[node name="Collision" type="CollisionShape3D" parent="NorthWall" unique_id=1051234195]
+shape = SubResource("NorthWallShape")
+
+[node name="Mesh" type="MeshInstance3D" parent="NorthWall" unique_id=358337525]
+mesh = SubResource("NorthWallMesh")
+
+[node name="SouthWall" type="StaticBody3D" parent="." unique_id=1639302928]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 30)
+
+[node name="Collision" type="CollisionShape3D" parent="SouthWall" unique_id=1467428216]
+shape = SubResource("SouthWallShape")
+
+[node name="Mesh" type="MeshInstance3D" parent="SouthWall" unique_id=2028614906]
+mesh = SubResource("SouthWallMesh")
+
+[node name="WestWall" type="StaticBody3D" parent="." unique_id=798601414]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 10, 0)
+
+[node name="Collision" type="CollisionShape3D" parent="WestWall" unique_id=1745783944]
+shape = SubResource("WestWallShape")
+
+[node name="Mesh" type="MeshInstance3D" parent="WestWall" unique_id=354934265]
+mesh = SubResource("WestWallMesh")
+
+[node name="EastWall" type="StaticBody3D" parent="." unique_id=389463081]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 10, 0)
+
+[node name="Collision" type="CollisionShape3D" parent="EastWall" unique_id=399591875]
+shape = SubResource("EastWallShape")
+
+[node name="Mesh" type="MeshInstance3D" parent="EastWall" unique_id=924351694]
+mesh = SubResource("EastWallMesh")
+
+[node name="Ceiling" type="StaticBody3D" parent="." unique_id=150908381]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20.5, 0)
+
+[node name="Collision" type="CollisionShape3D" parent="Ceiling" unique_id=454069903]
+shape = SubResource("CeilingShape")
+
+[node name="Mesh" type="MeshInstance3D" parent="Ceiling" unique_id=40009876]
+mesh = SubResource("CeilingMesh")
+
+[node name="TowerA" type="StaticBody3D" parent="." unique_id=632978699]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 4, -6)
+
+[node name="Collision" type="CollisionShape3D" parent="TowerA" unique_id=98303240]
+shape = SubResource("TowerAShape")
+
+[node name="Mesh" type="MeshInstance3D" parent="TowerA" unique_id=1746461820]
+mesh = SubResource("TowerAMesh")
+
+[node name="TowerB" type="StaticBody3D" parent="." unique_id=1646444595]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 6, -12)
+
+[node name="Collision" type="CollisionShape3D" parent="TowerB" unique_id=381897562]
+shape = SubResource("TowerBShape")
+
+[node name="Mesh" type="MeshInstance3D" parent="TowerB" unique_id=1824234276]
+mesh = SubResource("TowerBMesh")
+
+[node name="LowBlock" type="StaticBody3D" parent="." unique_id=407754592]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -8)
+
+[node name="Collision" type="CollisionShape3D" parent="LowBlock" unique_id=1119556135]
+shape = SubResource("LowBlockShape")
+
+[node name="Mesh" type="MeshInstance3D" parent="LowBlock" unique_id=1787064893]
+mesh = SubResource("LowBlockMesh")
+
+[node name="TowerC" type="StaticBody3D" parent="." unique_id=1649473160]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 5, 9)
+
+[node name="Collision" type="CollisionShape3D" parent="TowerC" unique_id=1254890729]
+shape = SubResource("TowerCShape")
+
+[node name="Mesh" type="MeshInstance3D" parent="TowerC" unique_id=204059740]
+mesh = SubResource("TowerCMesh")
+
+[node name="Beam" type="StaticBody3D" parent="." unique_id=740792503]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, -20)
+
+[node name="Collision" type="CollisionShape3D" parent="Beam" unique_id=730952420]
+shape = SubResource("BeamShape")
+
+[node name="Mesh" type="MeshInstance3D" parent="Beam" unique_id=800728809]
+mesh = SubResource("BeamMesh")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=378376765]
+transform = Transform3D(0.32107547, -0.21163173, 0.9231048, -0.37589929, 0.8661671, 0.3293239, -0.8692585, -0.45273224, 0.1985528, 11.543203, 12.630671, -7.834898)
+light_energy = 16.0
+light_specular = 2.37
+light_bake_mode = 1
+spot_angle = 89.99
