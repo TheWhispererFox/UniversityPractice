@@ -3,6 +3,11 @@
 [ext_resource type="PackedScene" path="res://Scenes/Player/Drone.tscn" id="1"]
 [ext_resource type="Script" uid="uid://db2mr5du3lb82" path="res://Scripts/Game/GameManager.cs" id="2"]
 
+[ext_resource type="Script" path="res://Scripts/Missions/MissionManager.cs" id="3"]
+[ext_resource type="PackedScene" path="res://Scenes/Missions/PickupZone.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://Scenes/Missions/DeliveryZone.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://Scenes/Missions/Cargo.tscn" id="6"]
+
 [sub_resource type="Environment" id="Environment"]
 background_mode = 1
 background_color = Color(0.12, 0.18, 0.26, 1)
@@ -90,6 +95,21 @@ size = Vector3(18, 2, 3)
 material = SubResource("Material")
 size = Vector3(18, 2, 3)
 
+[sub_resource type="StandardMaterial3D" id="FloorMaterial"]
+albedo_color = Color(0.12, 0.18, 0.23, 1)
+
+[sub_resource type="StandardMaterial3D" id="WallMaterial"]
+albedo_color = Color(0.3, 0.4, 0.5, 1)
+
+[sub_resource type="StandardMaterial3D" id="ObstacleMaterial"]
+albedo_color = Color(0.68, 0.26, 0.15, 1)
+
+[sub_resource type="StandardMaterial3D" id="BeamMaterial"]
+albedo_color = Color(0.8, 0.65, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="CeilingMaterial"]
+albedo_color = Color(0.2, 0.24, 0.3, 1)
+
 [node name="TestLevel" type="Node3D" unique_id=120631634]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=812793338]
@@ -113,6 +133,7 @@ shape = SubResource("GroundShape")
 
 [node name="Mesh" type="MeshInstance3D" parent="Ground" unique_id=1274215926]
 mesh = SubResource("GroundMesh")
+material_override = SubResource("FloorMaterial")
 
 [node name="NorthWall" type="StaticBody3D" parent="." unique_id=1686287868]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, -30)
@@ -122,6 +143,7 @@ shape = SubResource("NorthWallShape")
 
 [node name="Mesh" type="MeshInstance3D" parent="NorthWall" unique_id=358337525]
 mesh = SubResource("NorthWallMesh")
+material_override = SubResource("WallMaterial")
 
 [node name="SouthWall" type="StaticBody3D" parent="." unique_id=1639302928]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 30)
@@ -131,6 +153,7 @@ shape = SubResource("SouthWallShape")
 
 [node name="Mesh" type="MeshInstance3D" parent="SouthWall" unique_id=2028614906]
 mesh = SubResource("SouthWallMesh")
+material_override = SubResource("WallMaterial")
 
 [node name="WestWall" type="StaticBody3D" parent="." unique_id=798601414]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 10, 0)
@@ -140,6 +163,7 @@ shape = SubResource("WestWallShape")
 
 [node name="Mesh" type="MeshInstance3D" parent="WestWall" unique_id=354934265]
 mesh = SubResource("WestWallMesh")
+material_override = SubResource("WallMaterial")
 
 [node name="EastWall" type="StaticBody3D" parent="." unique_id=389463081]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 10, 0)
@@ -149,6 +173,7 @@ shape = SubResource("EastWallShape")
 
 [node name="Mesh" type="MeshInstance3D" parent="EastWall" unique_id=924351694]
 mesh = SubResource("EastWallMesh")
+material_override = SubResource("WallMaterial")
 
 [node name="Ceiling" type="StaticBody3D" parent="." unique_id=150908381]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20.5, 0)
@@ -158,6 +183,7 @@ shape = SubResource("CeilingShape")
 
 [node name="Mesh" type="MeshInstance3D" parent="Ceiling" unique_id=40009876]
 mesh = SubResource("CeilingMesh")
+material_override = SubResource("CeilingMaterial")
 
 [node name="TowerA" type="StaticBody3D" parent="." unique_id=632978699]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 4, -6)
@@ -167,6 +193,7 @@ shape = SubResource("TowerAShape")
 
 [node name="Mesh" type="MeshInstance3D" parent="TowerA" unique_id=1746461820]
 mesh = SubResource("TowerAMesh")
+material_override = SubResource("ObstacleMaterial")
 
 [node name="TowerB" type="StaticBody3D" parent="." unique_id=1646444595]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 6, -12)
@@ -176,6 +203,7 @@ shape = SubResource("TowerBShape")
 
 [node name="Mesh" type="MeshInstance3D" parent="TowerB" unique_id=1824234276]
 mesh = SubResource("TowerBMesh")
+material_override = SubResource("ObstacleMaterial")
 
 [node name="LowBlock" type="StaticBody3D" parent="." unique_id=407754592]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -8)
@@ -185,6 +213,7 @@ shape = SubResource("LowBlockShape")
 
 [node name="Mesh" type="MeshInstance3D" parent="LowBlock" unique_id=1787064893]
 mesh = SubResource("LowBlockMesh")
+material_override = SubResource("ObstacleMaterial")
 
 [node name="TowerC" type="StaticBody3D" parent="." unique_id=1649473160]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 5, 9)
@@ -194,6 +223,7 @@ shape = SubResource("TowerCShape")
 
 [node name="Mesh" type="MeshInstance3D" parent="TowerC" unique_id=204059740]
 mesh = SubResource("TowerCMesh")
+material_override = SubResource("ObstacleMaterial")
 
 [node name="Beam" type="StaticBody3D" parent="." unique_id=740792503]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, -20)
@@ -203,6 +233,7 @@ shape = SubResource("BeamShape")
 
 [node name="Mesh" type="MeshInstance3D" parent="Beam" unique_id=800728809]
 mesh = SubResource("BeamMesh")
+material_override = SubResource("BeamMaterial")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=378376765]
 transform = Transform3D(0.32107547, -0.21163173, 0.9231048, -0.37589929, 0.8661671, 0.3293239, -0.8692585, -0.45273224, 0.1985528, 11.543203, 12.630671, -7.834898)
@@ -210,3 +241,44 @@ light_energy = 16.0
 light_specular = 2.37
 light_bake_mode = 1
 spot_angle = 89.99
+
+[node name="Zones" type="Node3D" parent="."]
+
+[node name="Pickup1" parent="Zones" instance=ExtResource("4")]
+position = Vector3(-9, 0, 18)
+MissionId = 1
+
+[node name="Delivery1" parent="Zones" instance=ExtResource("5")]
+position = Vector3(18, 0, -18)
+MissionId = 1
+
+[node name="Pickup2" parent="Zones" instance=ExtResource("4")]
+position = Vector3(19, 0, 12)
+MissionId = 2
+
+[node name="Delivery2" parent="Zones" instance=ExtResource("5")]
+position = Vector3(-20, 0, -18)
+MissionId = 2
+
+[node name="Pickup3" parent="Zones" instance=ExtResource("4")]
+position = Vector3(-21, 0, 0)
+MissionId = 3
+
+[node name="Delivery3" parent="Zones" instance=ExtResource("5")]
+position = Vector3(0, 0, 23)
+MissionId = 3
+
+[node name="Cargo" parent="." instance=ExtResource("6")]
+[node name="MissionManager" type="Node" parent="."]
+script = ExtResource("3")
+
+[node name="FillLightWest" type="OmniLight3D" parent="."]
+position = Vector3(-16, 13, 5)
+light_color = Color(0.65, 0.8, 1, 1)
+light_energy = 3.0
+omni_range = 32.0
+[node name="FillLightEast" type="OmniLight3D" parent="."]
+position = Vector3(16, 13, -5)
+light_color = Color(1, 0.85, 0.65, 1)
+light_energy = 3.0
+omni_range = 32.0
