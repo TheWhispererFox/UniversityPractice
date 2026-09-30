@@ -1,76 +1,183 @@
-[gd_scene format=3]
-[ext_resource type="Script" path="res://Scripts/Player/PlayerController.cs" id="1"]
-[ext_resource type="Script" path="res://Scripts/Player/PlayerHealth.cs" id="2"]
+[gd_scene format=3 uid="uid://h6uqjf87bghx"]
+
+[ext_resource type="Script" uid="uid://cs1ua4f55ugc0" path="res://Scripts/Player/PlayerController.cs" id="1"]
+[ext_resource type="Script" uid="uid://dknac4wptn6iq" path="res://Scripts/Player/PlayerHealth.cs" id="2"]
+[ext_resource type="Script" uid="uid://b8xqnn3d16cu2" path="res://Scripts/Effects/PropellerAnimator.cs" id="3_f2xa3"]
+
 [sub_resource type="BoxShape3D" id="Shape"]
-size = Vector3(1.8, 0.6, 1.8)
+size = Vector3(1.8, 0.3107666, 1.8)
+
 [sub_resource type="StandardMaterial3D" id="BodyMaterial"]
-albedo_color = Color(0.12, 0.65, 0.85, 1)
+albedo_color = Color(0.857515, 0.89, 0.24029998, 1)
 metallic = 0.5
+
 [sub_resource type="BoxMesh" id="Body"]
 material = SubResource("BodyMaterial")
 size = Vector3(1.8, 0.6, 1.8)
+
 [sub_resource type="StandardMaterial3D" id="FrontMaterial"]
-albedo_color = Color(1, 0.75, 0.1, 1)
+albedo_color = Color(1, 0.9546667, 0.84000003, 1)
+backlight_enabled = true
+backlight = Color(0.98, 0.98, 0.98, 1)
+grow_amount = 1.032
+
 [sub_resource type="BoxMesh" id="Front"]
 material = SubResource("FrontMaterial")
 size = Vector3(1.2, 0.2, 0.08)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dp3wm"]
+albedo_color = Color(0.11, 0.11, 0.11, 1)
+metallic = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_f2xa3"]
+material = SubResource("StandardMaterial3D_dp3wm")
+size = Vector3(1.8, 0.6, 1.8)
+
 [sub_resource type="StandardMaterial3D" id="ExhaustMaterial"]
 shading_mode = 0
-albedo_color = Color(0.2, 0.8, 1, 1)
+albedo_color = Color(0.5546, 0.58115, 0.59, 1)
+
 [sub_resource type="SphereMesh" id="ExhaustMesh"]
 material = SubResource("ExhaustMaterial")
 radius = 0.07
 height = 0.14
 radial_segments = 8
 rings = 4
-[node name="Player" type="CharacterBody3D"]
+
+[node name="Player" type="CharacterBody3D" unique_id=1546347055]
 motion_mode = 1
 script = ExtResource("1")
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1509415499]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.050891116, 0)
 shape = SubResource("Shape")
-[node name="PlayerHealth" type="Node" parent="."]
+
+[node name="PlayerHealth" type="Node" parent="." unique_id=718865405]
 script = ExtResource("2")
-[node name="Visual" type="Node3D" parent="."]
-[node name="Body" type="MeshInstance3D" parent="Visual"]
+
+[node name="Visual" type="Node3D" parent="." unique_id=134512047 node_paths=PackedStringArray("Propellers")]
+script = ExtResource("3_f2xa3")
+Propellers = [NodePath("PropellerNE"), NodePath("PropellerSE"), NodePath("PropellerNW"), NodePath("PropellerSW")]
+
+[node name="Body" type="MeshInstance3D" parent="Visual" unique_id=693110913]
+transform = Transform3D(0.29325762, 0, 0, 0, 0.3455191, 0, 0, 0, 0.5379187, 0, 0, 0)
 mesh = SubResource("Body")
-[node name="Front" type="MeshInstance3D" parent="Visual"]
-position = Vector3(0, 0, -0.93)
+
+[node name="Body2" type="MeshInstance3D" parent="Visual" unique_id=187057663]
+transform = Transform3D(0.09209065, 0, 0.81164974, 0, 0.12409958, 0, -0.09209067, 0, 0.81164974, 0, 0.10831469, -0.0016808212)
+mesh = SubResource("Body")
+
+[node name="Body3" type="MeshInstance3D" parent="Visual" unique_id=535005424]
+transform = Transform3D(-0.092090674, 0, 0.8116497, 0, 0.12409958, 0, -0.092090644, 0, -0.8116498, 0, 0.10831469, -0.0016808212)
+mesh = SubResource("Body")
+
+[node name="Front" type="MeshInstance3D" parent="Visual" unique_id=2037813008]
+transform = Transform3D(0.35767895, 0, 0, 0, 0.77302575, 0, 0, 0, 0.60071516, 0, 0, -0.4836319)
 mesh = SubResource("Front")
-[node name="CameraPivot" type="Node3D" parent="."]
-position = Vector3(0, 1, 0)
-rotation = Vector3(-0.25, 0, 0)
-[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
+
+[node name="PropellerNE" type="Node3D" parent="Visual" unique_id=1244705165]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6094064, 0.17919207, -0.6110873)
+
+[node name="Propeller1" type="MeshInstance3D" parent="Visual/PropellerNE" unique_id=2031124009]
+transform = Transform3D(-0.027086565, 0, 0.2522207, 0, 0.05417027, 0, -0.027086554, 0, -0.25222072, 0, 0, 0)
+mesh = SubResource("BoxMesh_f2xa3")
+
+[node name="Propeller2" type="MeshInstance3D" parent="Visual/PropellerNE" unique_id=169099042]
+transform = Transform3D(-0.027086552, 0, -0.25222072, 0, 0.05417027, 0, 0.027086567, 0, -0.2522207, 0, 0, 0)
+mesh = SubResource("BoxMesh_f2xa3")
+
+[node name="EngineFX" type="CPUParticles3D" parent="Visual/PropellerNE" unique_id=376220024]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.08241224, 0)
+amount = 32
+lifetime = 0.3
+mesh = SubResource("ExhaustMesh")
+direction = Vector3(0, -1, 0)
+spread = 12.0
+gravity = Vector3(0, -2, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 3.0
+scale_amount_min = 0.1
+scale_amount_max = 0.5
+
+[node name="PropellerSE" type="Node3D" parent="Visual" unique_id=1641692528]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6094064, 0.17919207, 0.6400511)
+
+[node name="Propeller1" type="MeshInstance3D" parent="Visual/PropellerSE" unique_id=759158177]
+transform = Transform3D(-0.027086565, 0, 0.2522207, 0, 0.05417027, 0, -0.027086554, 0, -0.25222072, 0, 0, 0)
+mesh = SubResource("BoxMesh_f2xa3")
+
+[node name="Propeller2" type="MeshInstance3D" parent="Visual/PropellerSE" unique_id=2143782093]
+transform = Transform3D(-0.027086552, 0, -0.25222072, 0, 0.05417027, 0, 0.027086567, 0, -0.2522207, 0, 0, 0)
+mesh = SubResource("BoxMesh_f2xa3")
+
+[node name="EngineFX" type="CPUParticles3D" parent="Visual/PropellerSE" unique_id=1950063138]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.08241224, 0)
+amount = 32
+lifetime = 0.3
+mesh = SubResource("ExhaustMesh")
+direction = Vector3(0, -1, 0)
+spread = 12.0
+gravity = Vector3(0, -2, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 3.0
+scale_amount_min = 0.1
+scale_amount_max = 0.5
+
+[node name="PropellerNW" type="Node3D" parent="Visual" unique_id=311039346]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6169831, 0.17919207, -0.6110873)
+
+[node name="Propeller1" type="MeshInstance3D" parent="Visual/PropellerNW" unique_id=2004005586]
+transform = Transform3D(-0.027086565, 0, 0.2522207, 0, 0.05417027, 0, -0.027086554, 0, -0.25222072, 0, 0, 0)
+mesh = SubResource("BoxMesh_f2xa3")
+
+[node name="Propeller2" type="MeshInstance3D" parent="Visual/PropellerNW" unique_id=1569411860]
+transform = Transform3D(-0.027086552, 0, -0.25222072, 0, 0.05417027, 0, 0.027086567, 0, -0.2522207, 0, 0, 0)
+mesh = SubResource("BoxMesh_f2xa3")
+
+[node name="EngineFX" type="CPUParticles3D" parent="Visual/PropellerNW" unique_id=365362585]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.08241224, 0)
+amount = 32
+lifetime = 0.3
+mesh = SubResource("ExhaustMesh")
+direction = Vector3(0, -1, 0)
+spread = 12.0
+gravity = Vector3(0, -2, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 3.0
+scale_amount_min = 0.1
+scale_amount_max = 0.5
+
+[node name="PropellerSW" type="Node3D" parent="Visual" unique_id=1270407269]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6169831, 0.17919207, 0.6307603)
+
+[node name="Propeller1" type="MeshInstance3D" parent="Visual/PropellerSW" unique_id=2006647234]
+transform = Transform3D(-0.027086565, 0, 0.2522207, 0, 0.05417027, 0, -0.027086554, 0, -0.25222072, 0, 0, 0)
+mesh = SubResource("BoxMesh_f2xa3")
+
+[node name="Propeller2" type="MeshInstance3D" parent="Visual/PropellerSW" unique_id=1050040574]
+transform = Transform3D(-0.027086552, 0, -0.25222072, 0, 0.05417027, 0, 0.027086567, 0, -0.2522207, 0, 0, 0)
+mesh = SubResource("BoxMesh_f2xa3")
+
+[node name="EngineFX" type="CPUParticles3D" parent="Visual/PropellerSW" unique_id=1181869417]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.08241224, 0)
+amount = 32
+lifetime = 0.3
+mesh = SubResource("ExhaustMesh")
+direction = Vector3(0, -1, 0)
+spread = 12.0
+gravity = Vector3(0, -2, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 3.0
+scale_amount_min = 0.1
+scale_amount_max = 0.5
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=383245476]
+transform = Transform3D(1, 0, 0, 0, 0.9689124, 0.24740396, 0, -0.24740396, 0.9689124, 0, 1, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=984580388]
 spring_length = 7.0
 margin = 0.2
-[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=935823551]
 current = true
-fov = 75.0
 near = 0.1
-
-[node name="EngineLeft" type="CPUParticles3D" parent="Visual"]
-position = Vector3(-0.65, -0.32, 0.35)
-amount = 32
-lifetime = 0.3
-local_coords = false
-mesh = SubResource("ExhaustMesh")
-direction = Vector3(0, -1, 0)
-spread = 12.0
-gravity = Vector3(0, -2, 0)
-initial_velocity_min = 2.0
-initial_velocity_max = 3.0
-scale_amount_min = 0.4
-scale_amount_max = 1.0
-
-[node name="EngineRight" type="CPUParticles3D" parent="Visual"]
-position = Vector3(0.65, -0.32, 0.35)
-amount = 32
-lifetime = 0.3
-local_coords = false
-mesh = SubResource("ExhaustMesh")
-direction = Vector3(0, -1, 0)
-spread = 12.0
-gravity = Vector3(0, -2, 0)
-initial_velocity_min = 2.0
-initial_velocity_max = 3.0
-scale_amount_min = 0.4
-scale_amount_max = 1.0

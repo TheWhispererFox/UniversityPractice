@@ -1,18 +1,33 @@
-[gd_scene format=3]
-[ext_resource type="Script" path="res://Scripts/Missions/Cargo.cs" id="1"]
+[gd_scene format=3 uid="uid://c8asf1ily08c7"]
+
+[ext_resource type="Script" uid="uid://cxdpi3s2vvnm5" path="res://Scripts/Missions/Cargo.cs" id="1"]
+
 [sub_resource type="StandardMaterial3D" id="Material"]
 albedo_color = Color(1, 0.8, 0.2, 1)
+
 [sub_resource type="BoxMesh" id="Box"]
 material = SubResource("Material")
 size = Vector3(0.8, 0.8, 0.8)
+
 [sub_resource type="StandardMaterial3D" id="StripeMaterial"]
 albedo_color = Color(0.15, 0.1, 0.04, 1)
+
 [sub_resource type="BoxMesh" id="Stripe"]
 material = SubResource("StripeMaterial")
 size = Vector3(0.18, 0.82, 0.82)
-[node name="Cargo" type="Node3D"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_mf7p3"]
+size = Vector3(0.011230469, 0.26904297, 0.34777832)
+
+[node name="Cargo" type="Node3D" unique_id=1761174261]
 script = ExtResource("1")
-[node name="Box" type="MeshInstance3D" parent="."]
+
+[node name="Box" type="MeshInstance3D" parent="." unique_id=370173403]
 mesh = SubResource("Box")
-[node name="Stripe" type="MeshInstance3D" parent="."]
+
+[node name="Stripe" type="MeshInstance3D" parent="." unique_id=1561497536]
 mesh = SubResource("Stripe")
+
+[node name="Sticker" type="MeshInstance3D" parent="." unique_id=485476092]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.39832407, 0.21307653, 0.15081716)
+mesh = SubResource("BoxMesh_mf7p3")
