@@ -42,7 +42,8 @@ func check():
 	await require(game.get("IsDefeated") and not game.get("IsVictorious"), "Timeout must cause defeat")
 	await require(missions.get("TimeRemaining") == 0 and not missions.get("HasCargo"), "Timeout must clear cargo and clamp timer")
 	await require(not player.is_physics_processing(), "Timeout must disable flight")
-	await require(not player.get_node("Visual/EngineLeft").emitting, "Engine must stop after defeat")
+	for engine in player.get_node("Visual").find_children("*", "CPUParticles3D", true, false):
+		await require(not engine.emitting, "Engine must stop after defeat")
 	await visit("Delivery3")
 	await require(score.get("TotalScore") == total, "Timeout must not award delivery points")
 	scene.free()
@@ -50,22 +51,11 @@ func check():
 	await load_level()
 	score = scene.get_node("TestLevel/ScoreManager")
 	await require(score.get("TotalScore") == 0, "New run must reset score")
-	var weather = scene.get_node("TestLevel/WeatherManager")
-	var start = player.position
-	await require(player.get_node("Visual/EngineLeft").emitting, "Engine particles missing")
-	weather.call("SetWeather", 1)
-	await require(weather.get_node("Rain").emitting, "Rain particles missing")
-	for i in range(60):
-		await physics_frame
-	await require(player.position.distance_to(start) > 0.5, "Wind must cause gentle drift")
-	await require(weather.get("WindVelocity").length() <= 1.8, "Wind must remain bounded")
-	await require(abs(player.position.y - start.y) < 0.01, "Wind must not change altitude")
-	weather.call("SetWeather", 2)
-	var environment = scene.get_node("TestLevel/WorldEnvironment").environment
-	await require(environment.fog_enabled and environment.fog_density > 0.03, "Fog not applied")
-	await require(not weather.get_node("Rain").visible, "Rain remains visible in fog")
-	weather.call("SetWeather", 0)
-	await require(not environment.fog_enabled and weather.get("WindVelocity") == Vector3.ZERO, "Clear must restore weather")
+	# Weather was removed from the current project; test the current four engines.
+	var engines = player.get_node("Visual").find_children("*", "CPUParticles3D", true, false)
+	await require(engines.size() == 4, "Expected four propeller engines")
+	for engine in engines:
+		await require(engine.emitting, "Engine particles missing")
 	# Actual keyboard path: changing difficulty starts a fresh run and R retains it.
 	var key = InputEventKey.new()
 	key.physical_keycode = KEY_3
@@ -81,5 +71,5 @@ func check():
 	await settle()
 	scene = current_scene
 	await require(scene.get_node("TestLevel/MissionManager").get("TimeLimit") == 45.0, "R must retain difficulty")
-	print("PASS: difficulty, impact scaling, timer, score, damage penalty, timeout, wind, weather, particles, restart")
+	print("PASS: difficulty, impact scaling, timer, score, damage penalty, timeout, particles, restart")
 	quit(0)

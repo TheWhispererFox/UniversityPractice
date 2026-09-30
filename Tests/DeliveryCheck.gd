@@ -13,8 +13,9 @@ func require(condition: bool, message: String):
 	if not condition:
 		push_error(message)
 		quit(1)
-		# Stop this coroutine immediately after a failed check.
-		await process_frame
+		# Never resume the test and overwrite the failing exit code with quit(0).
+		while true:
+			await process_frame
 
 func settle():
 	for i in range(5):

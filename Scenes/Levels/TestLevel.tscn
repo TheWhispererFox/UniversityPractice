@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dwtl0g3ua3k6w"]
 
-[ext_resource type="PackedScene" path="res://Scenes/Player/Drone.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://h6uqjf87bghx" path="res://Scenes/Player/Drone.tscn" id="1"]
 [ext_resource type="Script" uid="uid://db2mr5du3lb82" path="res://Scripts/Game/GameManager.cs" id="2"]
 [ext_resource type="Script" uid="uid://dxpqobyviicxg" path="res://Scripts/Missions/MissionManager.cs" id="3"]
 [ext_resource type="PackedScene" path="res://Scenes/Missions/PickupZone.tscn" id="4"]
