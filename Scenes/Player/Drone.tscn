@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene format=3]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerController.cs" id="1"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerHealth.cs" id="2"]
 [sub_resource type="BoxShape3D" id="Shape"]
@@ -14,6 +14,15 @@ albedo_color = Color(1, 0.75, 0.1, 1)
 [sub_resource type="BoxMesh" id="Front"]
 material = SubResource("FrontMaterial")
 size = Vector3(1.2, 0.2, 0.08)
+[sub_resource type="StandardMaterial3D" id="ExhaustMaterial"]
+shading_mode = 0
+albedo_color = Color(0.2, 0.8, 1, 1)
+[sub_resource type="SphereMesh" id="ExhaustMesh"]
+material = SubResource("ExhaustMaterial")
+radius = 0.07
+height = 0.14
+radial_segments = 8
+rings = 4
 [node name="Player" type="CharacterBody3D"]
 motion_mode = 1
 script = ExtResource("1")
@@ -37,3 +46,31 @@ margin = 0.2
 current = true
 fov = 75.0
 near = 0.1
+
+[node name="EngineLeft" type="CPUParticles3D" parent="Visual"]
+position = Vector3(-0.65, -0.32, 0.35)
+amount = 32
+lifetime = 0.3
+local_coords = false
+mesh = SubResource("ExhaustMesh")
+direction = Vector3(0, -1, 0)
+spread = 12.0
+gravity = Vector3(0, -2, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 3.0
+scale_amount_min = 0.4
+scale_amount_max = 1.0
+
+[node name="EngineRight" type="CPUParticles3D" parent="Visual"]
+position = Vector3(0.65, -0.32, 0.35)
+amount = 32
+lifetime = 0.3
+local_coords = false
+mesh = SubResource("ExhaustMesh")
+direction = Vector3(0, -1, 0)
+spread = 12.0
+gravity = Vector3(0, -2, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 3.0
+scale_amount_min = 0.4
+scale_amount_max = 1.0

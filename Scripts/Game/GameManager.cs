@@ -20,11 +20,17 @@ public partial class GameManager : Node
 		{
 			if (IsDefeated) return;
 			IsVictorious = true;
-			player.Velocity = Vector3.Zero;
-			player.SetPhysicsProcess(false);
+			player.StopFlight();
 			GD.Print("Victory: all deliveries completed! Press R to restart.");
 		};
-		GD.Print("Drone HP: 100/100. Press R to restart.");
+		GetNode<MissionManager>("../MissionManager").MissionTimedOut += () =>
+		{
+			if (IsDefeated || IsVictorious) return;
+			IsDefeated = true;
+			player.StopFlight();
+			GD.Print("Defeat: mission time expired. Press R to restart.");
+		};
+		GD.Print("Drone HP: 100/100. R: restart. 1/2/3: Easy/Normal/Hard (new run).");
 	}
 
 	public override void _UnhandledInput(InputEvent @event)

@@ -9,6 +9,9 @@ public partial class PlayerController : CharacterBody3D
 	[Export] public float DamagePerSpeed { get; set; } = 5f;
 	[Export] public float DamageCooldown { get; set; } = 0.5f;
 
+	public float DamageMultiplier { get; set; } = 1f;
+	public Vector3 WindVelocity { get; set; }
+
 	private PlayerHealth _health;
 	private float _damageCooldown;
 
@@ -31,7 +34,7 @@ public partial class PlayerController : CharacterBody3D
 		Vector3 direction = GlobalBasis * new Vector3(planar.X, 0f, planar.Y);
 		direction.Y = Input.GetAxis("descend", "ascend");
 		if (direction.LengthSquared() > 1f) direction = direction.Normalized();
-		Velocity = Velocity.MoveToward(direction * FlightSpeed, Acceleration * dt);
+		Velocity = Velocity.MoveToward(direction * FlightSpeed + WindVelocity, Acceleration * dt);
 		Vector3 incomingVelocity = Velocity;
 		MoveAndSlide();
 
@@ -43,14 +46,21 @@ public partial class PlayerController : CharacterBody3D
 		if (_damageCooldown <= 0f && impactSpeed > DamageThreshold)
 		{
 			_damageCooldown = DamageCooldown;
-			_health.TakeDamage(Mathf.CeilToInt((impactSpeed - DamageThreshold) * DamagePerSpeed));
+			_health.TakeDamage(Mathf.CeilToInt((impactSpeed - DamageThreshold) * DamagePerSpeed * DamageMultiplier));
 		}
+	}
+
+	public void StopFlight()
+	{
+		Velocity = Vector3.Zero;
+		SetPhysicsProcess(false);
+		GetNode<CpuParticles3D>("Visual/EngineLeft").Emitting = false;
+		GetNode<CpuParticles3D>("Visual/EngineRight").Emitting = false;
 	}
 
 	private void OnDied()
 	{
-		Velocity = Vector3.Zero;
+		StopFlight();
 		GetNode<Node3D>("Visual").Hide();
-		SetPhysicsProcess(false);
 	}
 }

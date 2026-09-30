@@ -1,0 +1,51 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://Scripts/Effects/DeliveryEffects.cs" id="1"]
+[sub_resource type="StandardMaterial3D" id="PickupMaterial"]
+shading_mode = 0
+albedo_color = Color(1, 0.65, 0.1, 1)
+[sub_resource type="StandardMaterial3D" id="DeliveryMaterial"]
+shading_mode = 0
+albedo_color = Color(0.15, 1, 0.45, 1)
+[sub_resource type="SphereMesh" id="PickupMesh"]
+material = SubResource("PickupMaterial")
+radius = 0.12
+height = 0.24
+radial_segments = 8
+rings = 4
+[sub_resource type="BoxMesh" id="DeliveryMesh"]
+material = SubResource("DeliveryMaterial")
+size = Vector3(0.16, 0.16, 0.16)
+[node name="DeliveryEffects" type="Node3D"]
+script = ExtResource("1")
+
+[node name="Pickup" type="CPUParticles3D" parent="."]
+emitting = false
+one_shot = true
+amount = 36
+lifetime = 0.8
+explosiveness = 1.0
+local_coords = false
+mesh = SubResource("PickupMesh")
+direction = Vector3(0, 1, 0)
+spread = 100.0
+gravity = Vector3(0, -3, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+scale_amount_min = 0.4
+scale_amount_max = 1.0
+
+[node name="Delivery" type="CPUParticles3D" parent="."]
+emitting = false
+one_shot = true
+amount = 36
+lifetime = 0.8
+explosiveness = 1.0
+local_coords = false
+mesh = SubResource("DeliveryMesh")
+direction = Vector3(0, 1, 0)
+spread = 100.0
+gravity = Vector3(0, -3, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+scale_amount_min = 0.4
+scale_amount_max = 1.0

@@ -8,6 +8,11 @@
 [ext_resource type="PackedScene" path="res://Scenes/Missions/DeliveryZone.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://Scenes/Missions/Cargo.tscn" id="6"]
 
+[ext_resource type="Script" path="res://Scripts/Game/DifficultyManager.cs" id="Difficulty"]
+[ext_resource type="Script" path="res://Scripts/Game/ScoreManager.cs" id="Score"]
+[ext_resource type="PackedScene" path="res://Scenes/Levels/Weather.tscn" id="Weather"]
+[ext_resource type="PackedScene" path="res://Scenes/Missions/DeliveryEffects.tscn" id="Effects"]
+
 [sub_resource type="Environment" id="Environment"]
 background_mode = 1
 background_color = Color(0.12, 0.18, 0.26, 1)
@@ -282,3 +287,10 @@ position = Vector3(16, 13, -5)
 light_color = Color(1, 0.85, 0.65, 1)
 light_energy = 3.0
 omni_range = 32.0
+
+[node name="DifficultyManager" type="Node" parent="."]
+script = ExtResource("Difficulty")
+[node name="ScoreManager" type="Node" parent="."]
+script = ExtResource("Score")
+[node name="WeatherManager" parent="." instance=ExtResource("Weather")]
+[node name="DeliveryEffects" parent="." instance=ExtResource("Effects")]
