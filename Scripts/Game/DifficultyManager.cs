@@ -11,7 +11,6 @@ public partial class DifficultyManager : Node
     {
         if (GetTree().HasMeta("difficulty")) Level = (Difficulty)(int)GetTree().GetMeta("difficulty");
         GetNode<PlayerController>("../Player").DamageMultiplier = DamageMultiplier;
-        GD.Print($"Difficulty: {Level}. Mission time: {MissionSeconds}s; impact damage x{DamageMultiplier}.");
     }
 
     public override void _UnhandledInput(InputEvent @event)

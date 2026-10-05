@@ -15,6 +15,5 @@ public partial class ScoreManager : Node
         LastMissionScore = Mathf.Max(0, 500 + LastTimeBonus - LastDamagePenalty);
         TotalScore += LastMissionScore;
         EmitSignal(SignalName.ScoreChanged, TotalScore);
-        GD.Print($"Score: 500 + {LastTimeBonus} time bonus - {LastDamagePenalty} damage = {LastMissionScore}. Total: {TotalScore}.");
     }
 }

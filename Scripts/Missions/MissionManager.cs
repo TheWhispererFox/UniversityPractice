@@ -9,7 +9,6 @@ public partial class MissionManager : Node
     public float TimeLimit { get; private set; }
     private bool _timerRunning;
     private int _startingHp;
-    private int _lastReportedSeconds;
     private DifficultyManager _difficulty;
     private ScoreManager _score;
     private DeliveryEffects _effects;
@@ -56,10 +55,6 @@ public partial class MissionManager : Node
     {
         if (!_timerRunning || _stopped) return;
         TimeRemaining = Mathf.Max(0f, TimeRemaining - (float)delta);
-        int seconds = Mathf.CeilToInt(TimeRemaining);
-        if (seconds != _lastReportedSeconds && (seconds % 10 == 0 || seconds <= 5))
-            GD.Print($"Mission time left: {seconds}s.");
-        _lastReportedSeconds = seconds;
         if (TimeRemaining > 0f) return;
         Stop();
         EmitSignal(SignalName.MissionTimedOut);
@@ -73,7 +68,6 @@ public partial class MissionManager : Node
         _cargo.AttachTo(_player);
         _effects.PlayPickup(_player.GlobalPosition);
         UpdateMarkers();
-        GD.Print($"Cargo collected. Fly to Delivery {zone.MissionId} (green beacon).");
     }
 
     private void TryDeliver(DeliveryZone zone, Node3D body)
@@ -83,7 +77,6 @@ public partial class MissionManager : Node
         _score.AwardDelivery(TimeRemaining, _startingHp - _health.CurrentHp);
         _cargo.Clear();
         CompletedMissions++;
-        GD.Print($"Delivered: {CompletedMissions}/{MissionCount}.");
         if (CompletedMissions == MissionCount)
         {
             Stop();
@@ -99,11 +92,8 @@ public partial class MissionManager : Node
         TimeRemaining = TimeLimit;
         _startingHp = _health.CurrentHp;
         _timerRunning = true;
-        _lastReportedSeconds = Mathf.CeilToInt(TimeRemaining);
-        GD.Print($"Mission timer: {TimeRemaining}s.");
         _cargo.PlaceAt(_pickups[CompletedMissions], new Vector3(0, 0.8f, 0));
         UpdateMarkers();
-        GD.Print($"Mission {CompletedMissions + 1}/{MissionCount}: Pickup {_pickups[CompletedMissions].MissionId} (orange beacon).");
     }
 
     private void UpdateMarkers()

@@ -10,6 +10,10 @@
 [ext_resource type="PackedScene" path="res://Scenes/Missions/DeliveryEffects.tscn" id="Effects"]
 [ext_resource type="Script" uid="uid://bl1tnjy66q56e" path="res://Scripts/Game/ScoreManager.cs" id="Score"]
 
+[ext_resource type="Script" path="res://Scripts/Stats/SaveManager.cs" id="Save"]
+[ext_resource type="Script" path="res://Scripts/Stats/SessionStats.cs" id="Session"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/GameUI.tscn" id="UI"]
+
 [sub_resource type="Environment" id="Environment"]
 background_mode = 1
 background_color = Color(0.12, 0.18, 0.26, 1)
@@ -287,3 +291,9 @@ script = ExtResource("Difficulty")
 script = ExtResource("Score")
 
 [node name="DeliveryEffects" parent="." unique_id=1257598078 instance=ExtResource("Effects")]
+
+[node name="SaveManager" type="Node" parent="."]
+script = ExtResource("Save")
+[node name="SessionStats" type="Node" parent="."]
+script = ExtResource("Session")
+[node name="GameUI" parent="." instance=ExtResource("UI")]

@@ -1,6 +1,7 @@
 extends SceneTree
 
 func _initialize():
+    set_meta("test_stats_path", "user://test_" + get_script().resource_path.get_file().get_basename() + ".json")
     call_deferred("check")
 
 func check():
